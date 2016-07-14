@@ -21,8 +21,8 @@
         </tr>
         <tr ng-repeat-start="pokemon in ev.pokechart">
            <td>{{ pokemon.Pokemon }}</td>
-           <td></td>
-           <td></td>
+           <td>  <input type="text" size="3" ngPattern="\d+" ng-model="pokemon.count"> </td>
+           <td> <input type="text" size="3" ngPattern="\d+" ng-model="pokemon.candyCount"> </td>
            <td> {{ pokemon.Candy }} </td>
            <td></td>
            <td></td>
@@ -30,9 +30,9 @@
            <td></td>
         </tr>
         <tr ng-repeat-end>
-           <td> {{ pokemon.EvolveTo }} </td>
-           <td></td>
-           <td></td>
+           <td> {{ pokemon.EvolveTo.join(" or ") }} </td>
+           <td> <input type="text" size="3" ngPattern="\d+" ng-model="pokemon.evolvedCount"> </td>
+           <td> - </td>
            <td> - </td>
            <td></td>
            <td></td>
@@ -47,20 +47,23 @@
             'use strict';
 
             angular
-            .module('evolveForPokemonGo', [])
-            .controller('Evovle', Evovle);
+                .module('evolveForPokemonGo', [])
+                .controller('Evovle', Evovle);
 
-          Evovle.$inject = ["$http"];
+            Evovle.$inject = ["$http"];
 
             function Evovle($http) {
-            var vm = this;
-            vm.promise = null;
-            vm.hi = "Hello, world!"
+                var vm = this;
 
-            $http.get("data/evolve.json")
-            .success(function(response) {
-                vm.pokechart = response;
-            });
+                vm.InitValues = function(e) {
+                    e.count = e.candyCount = e.evolvedCount = 0;
+                    return e;
+                }
+
+                $http.get("data/evolve.json")
+                .success(function(response) {
+                    vm.pokechart = response.map(vm.InitValues);
+                });
             }
         })();
     </script>
