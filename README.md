@@ -2,7 +2,9 @@
 
 NOTE: The author(s) and this repo have no affiliation with Pokemon, Niantic, etc.. This is just a game player gathering and formatting information for others.
 
-Just getting started. First thoughts: copy leveling data, attack/defense modifiers, and create a evolution calculator
+## Tools
+
+[Evolve planner / calculator](http://midnightfreddie.github.io/pokemon_go_helpers/evolve-planner.html)
 
 ## Notes
 
