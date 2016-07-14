@@ -5,9 +5,16 @@
 </head>
 <body ng-app="evolveForPokemonGo" ng-controller="Evovle as ev">
     <h1>Evovle Planner for Pokemon Go</h1>
-    <div>Intended to help decide how many Pokemon to transfer for candy to perpare for a lucky egg XP blitz.</div>
+    <div>Intended to help decide how many Pokemon to transfer for candy to perpare for a lucky egg XP blitz. No affiliation with Niantic or Nintendo.</div>
+    <p>Use at your own risk. Not responsible for mistakes. This is still under development. I'd like it to eventually be easy to use on mobile.</p>
+    <h2>Instructions</h2>
+    <ul>
+        <li><strong>Only count the Pokemon you're willing to transfer (sell for candy).</strong> If you want to keep any of your Pidgeys or Pidgeottos, for example, don't include them in the counts below.</li>
+        <li>This assumes you will spend candy first, then sell second-level evolved Pokemon for candy, and then sell first-level Pokemon for candy until you don't have enough candy plus transferrable Pokemon to evolve another.</li>
+        <li>Enter your Pokemon counts and candy counts for the "from" and "to" Pokemon, and the planner will show you how many of each type of Pokemon to transfer.</li>
+        <li>You may want to transfer as many Pokemon (up to your count) before using a lucky egg otherwise making a lot of transfers can eat up your double-XP time</li>
+    </ul>
     <h2>Planner/Calculator</h2>
-    <div>This is still under development. I'd like it to eventually be easy to use on mobile.</div>
     <table style="white-space:pre-wrap;">
         <tr>
            <th>Pokemon</th>
@@ -20,6 +27,8 @@ Transfer</th>
            <th>Num to
 Evolve</th>
            <th>Count
+when done</th>
+           <th>Candy
 when done</th>
            <th>XP when
 done</th>
@@ -34,6 +43,7 @@ Lucky Egg</th>
            <td>{{ ev.ToTransfer(pokemon) }}</td>
            <td>{{ pokemon.numToEvolve }}</td>
            <td>{{ pokemon.numPokeAfter }}</td>
+           <td>{{ pokemon.candyCountAfter }}</td>
            <td rowspan="2">{{ pokemon.Xp }}</td>
            <td rowspan="2">{{ pokemon.Xp * 2 }}</td>
         </tr>
@@ -45,7 +55,10 @@ Lucky Egg</th>
            <td>{{ pokemon.numEvPokeToTransfer }}</td>
            <td> - </td>
            <td>{{ pokemon.numEvPokeAfter }}</td>
-
+           <td> - </td>
+        </tr>
+        <tr>
+            <td>XP Totals</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>{{ ev.SumXP() }}</td><td>{{ ev.SumXP() * 2 }}</td>
         </tr>
 
     </table>
@@ -62,6 +75,7 @@ Lucky Egg</th>
 
             function Evovle($http) {
                 var vm = this;
+                vm.pokechart = [];
 
                 vm.InitValues = function(e) {
                     e.count = e.candyCount = e.evolvedCount = 0;
@@ -74,15 +88,9 @@ Lucky Egg</th>
                     var numPokeToTransfer =0;
                     var numEvPokeToTransfer = 0;
                     var numPoke = pokemon.count;
-                    var numCandy = pokemon.candyCount;
-                    var numEvPoke = pokemon.evolvedCount;
+                    var numCandy = parseInt(pokemon.candyCount);
+                    var numEvPoke = parseInt(pokemon.evolvedCount);
 
-                    // Math.floor(pokemon.candyCount / pokemon.Candy );
-                    // while (numPoke > 0 && Math.floor(numCandy / pokemon.Candy ) > 0) {
-                    //     numCandy -= pokemon.Candy;
-                    //     numPoke -= 1;
-                    //     numToEvolve += 1;
-                    // }
                     while (numPoke > 0 && Math.floor((numCandy + numEvPoke + numPoke -1) / pokemon.Candy ) > 0) {
                         if (numCandy >= pokemon.Candy) {
                             numCandy -= pokemon.Candy;
@@ -100,12 +108,18 @@ Lucky Egg</th>
                         }
                     }
                     pokemon.numToEvolve = numToEvolve;
-                    // pokemon.numPokeToTransfer = numPokeToTransfer;
                     pokemon.numEvPokeToTransfer = numEvPokeToTransfer;
                     pokemon.numPokeAfter = numPoke;
                     pokemon.numEvPokeAfter = numEvPoke;
+                    pokemon.candyCountAfter = numCandy;
                     pokemon.Xp = numToEvolve * 500;
-                    return "TESTING DON'T USE\n" + numPokeToTransfer;
+                    return numPokeToTransfer;
+                }
+
+                vm.SumXP = function() {
+                    return vm.pokechart.reduce(function(sum, e, i, a){
+                        return sum + e.Xp;
+                    }, 0);
                 }
 
                 $http.get("data/evolve.json")
