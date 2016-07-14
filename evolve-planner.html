@@ -8,30 +8,35 @@
     <div>Intended to help decide how many Pokemon to transfer for candy to perpare for a lucky egg XP blitz.</div>
     <h2>Planner/Calculator</h2>
     <div>This is still under development. I'd like it to eventually be easy to use on mobile.</div>
-    <table>
+    <table style="white-space:pre-wrap;">
         <tr>
            <th>Pokemon</th>
            <th>Count</th>
            <th>Candy</th>
-           <th>Candy to Evolve</th>
-           <th>Number to Transfer</th>
-           <th>Count when done</th>
-           <th>XP when done</th>
-           <th>XP if Lucky Egg</th>
+           <th>Candy to
+Evolve</th>
+           <th>Num to
+Transfer</th>
+           <th>Count
+when done</th>
+           <th>XP when
+done</th>
+           <th>XP if
+Lucky Egg</th>
         </tr>
         <tr ng-repeat-start="pokemon in ev.pokechart">
            <td>{{ pokemon.Pokemon }}</td>
-           <td>  <input type="text" size="3" ngPattern="\d+" ng-model="pokemon.count"> </td>
-           <td> <input type="text" size="3" ngPattern="\d+" ng-model="pokemon.candyCount"> </td>
-           <td> {{ pokemon.Candy }} </td>
+           <td><input type="text" size="3" ngPattern="\d+" ng-model="pokemon.count"></td>
+           <td><input type="text" size="3" ngPattern="\d+" ng-model="pokemon.candyCount"></td>
+           <td>{{ pokemon.Candy }}</td>
            <td></td>
            <td></td>
            <td></td>
            <td></td>
         </tr>
         <tr ng-repeat-end>
-           <td> {{ pokemon.EvolveTo.join(" or ") }} </td>
-           <td> <input type="text" size="3" ngPattern="\d+" ng-model="pokemon.evolvedCount"> </td>
+           <td style="text-align:right;"> {{ pokemon.EvolveTo.join('\nor ') }} </td>
+           <td><input type="text" size="3" ngPattern="\d+" ng-model="pokemon.evolvedCount"></td>
            <td> - </td>
            <td> - </td>
            <td></td>
