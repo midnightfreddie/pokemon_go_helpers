@@ -8,6 +8,7 @@
     <div>Intended to help decide how many Pokemon to transfer for candy to perpare for a lucky egg XP blitz.</div>
     <h2>Magikarp test area</h2>
     <div>{{ ev.hi }}</div>
+    <div ng-repeat="pokemon in ev.pokechart">{{ pokemon.Pokemon }}</div>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script>
         (function() {
@@ -17,12 +18,17 @@
             .module('evolveForPokemonGo', [])
             .controller('Evovle', Evovle);
 
-        //   Evovle.$inject = [];
+          Evovle.$inject = ["$http"];
 
-            function Evovle() {
+            function Evovle($http) {
             var vm = this;
             vm.promise = null;
             vm.hi = "Hello, world!"
+
+            $http.get("data/evolve.json")
+            .success(function(response) {
+                vm.pokechart = response;
+            });
             }
         })();
     </script>
