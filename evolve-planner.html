@@ -6,9 +6,41 @@
 <body ng-app="evolveForPokemonGo" ng-controller="Evovle as ev">
     <h1>Evovle Planner for Pokemon Go</h1>
     <div>Intended to help decide how many Pokemon to transfer for candy to perpare for a lucky egg XP blitz.</div>
-    <h2>Magikarp test area</h2>
-    <div>{{ ev.hi }}</div>
-    <div ng-repeat="pokemon in ev.pokechart">{{ pokemon.Pokemon }}</div>
+    <h2>Planner/Calculator</h2>
+    <div>This is still under development. I'd like it to eventually be easy to use on mobile.</div>
+    <table>
+        <tr>
+           <th>Pokemon</th>
+           <th>Count</th>
+           <th>Candy</th>
+           <th>Candy to Evolve</th>
+           <th>Number to Transfer</th>
+           <th>Count when done</th>
+           <th>XP when done</th>
+           <th>XP if Lucky Egg</th>
+        </tr>
+        <tr ng-repeat-start="pokemon in ev.pokechart">
+           <td>{{ pokemon.Pokemon }}</td>
+           <td></td>
+           <td></td>
+           <td> {{ pokemon.Candy }} </td>
+           <td></td>
+           <td></td>
+           <td></td>
+           <td></td>
+        </tr>
+        <tr ng-repeat-end>
+           <td> {{ pokemon.EvolveTo }} </td>
+           <td></td>
+           <td></td>
+           <td> - </td>
+           <td></td>
+           <td></td>
+           <td></td>
+           <td></td>
+        </tr>
+
+    </table>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script>
         (function() {
