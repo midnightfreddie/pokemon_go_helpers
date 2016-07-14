@@ -2,6 +2,18 @@
 <html>
 <head>
     <title>Evolve Planner for Pokemon Go</title>
+    <style>
+        table {
+            border-collapse: collapse; /* To eliminate lines between shaded rows */
+            border: 1px solid black;
+            text-align: right;
+        }
+        th {
+            border: 1px solid black;
+            text-align: center;
+        }
+        tr:nth-child(4n), tr:nth-child(4n+1) { background: #CCC; }
+    </style>
 </head>
 <body ng-app="evolveForPokemonGo" ng-controller="Evovle as ev">
     <h1>Evovle Planner for Pokemon Go</h1>
@@ -13,6 +25,7 @@
         <li>This assumes you will spend candy first, then sell second-level evolved Pokemon for candy, and then sell first-level Pokemon for candy until you don't have enough candy plus transferrable Pokemon to evolve another.</li>
         <li>Enter your Pokemon counts and candy counts for the "from" and "to" Pokemon, and the planner will show you how many of each type of Pokemon to transfer.</li>
         <li>You may want to transfer as many Pokemon (up to your count) before using a lucky egg otherwise making a lot of transfers can eat up your double-XP time</li>
+        <li>But you may also want/need to transfer newly-evolved Pokemon to pay for more evolutions.</li>
     </ul>
     <h2>Planner/Calculator</h2>
     <table style="white-space:pre-wrap;">
@@ -48,14 +61,14 @@ Lucky Egg</th>
            <td rowspan="2">{{ pokemon.Xp * 2 }}</td>
         </tr>
         <tr ng-repeat-end>
-           <td style="text-align:right;"> {{ pokemon.EvolveTo.join('\nor ') }} </td>
+           <td>to {{ pokemon.EvolveTo.join('\nor ') }}</td>
            <td><input type="text" size="3" ngPattern="\d+" ng-model="pokemon.evolvedCount"></td>
-           <td> - </td>
-           <td> - </td>
+           <td>-</td>
+           <td>-</td>
            <td>{{ pokemon.numEvPokeToTransfer }}</td>
-           <td> - </td>
+           <td>-</td>
            <td>{{ pokemon.numEvPokeAfter }}</td>
-           <td> - </td>
+           <td>-</td>
         </tr>
         <tr>
             <td>XP Totals</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>{{ ev.SumXP() }}</td><td>{{ ev.SumXP() * 2 }}</td>
