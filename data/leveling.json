@@ -1,0 +1,46 @@
+[
+  {
+    "Pokemon": "Pidgey",
+    "Candy": "12",
+    "EvolveTo": [
+      "Pidgeotto"
+    ]
+  },
+  {
+    "Pokemon": "Caterpie",
+    "Candy": "12",
+    "EvolveTo": [
+      "Metapod"
+    ]
+  },
+  {
+    "Pokemon": "Weedle",
+    "Candy": "12",
+    "EvolveTo": [
+      "Kakuna"
+    ]
+  },
+  {
+    "Pokemon": "Rattata",
+    "Candy": "25",
+    "EvolveTo": [
+      "Raticate"
+    ]
+  },
+  {
+    "Pokemon": "Oddish",
+    "Candy": "25",
+    "EvolveTo": [
+      "Gloom"
+    ]
+  },
+  {
+    "Pokemon": "Eevee",
+    "Candy": "25",
+    "EvolveTo": [
+      "Vaporeon",
+      "Flareon",
+      "Jolteon"
+    ]
+  }
+]
