@@ -17,6 +17,8 @@
 Evolve</th>
            <th>Num to
 Transfer</th>
+           <th>Num to
+Evolve</th>
            <th>Count
 when done</th>
            <th>XP when
@@ -29,20 +31,21 @@ Lucky Egg</th>
            <td><input type="text" size="3" ngPattern="\d+" ng-model="pokemon.count"></td>
            <td><input type="text" size="3" ngPattern="\d+" ng-model="pokemon.candyCount"></td>
            <td>{{ pokemon.Candy }}</td>
-           <td></td>
-           <td></td>
-           <td></td>
-           <td></td>
+           <td>{{ ev.ToTransfer(pokemon) }}</td>
+           <td>{{ pokemon.numToEvolve }}</td>
+           <td>{{ pokemon.numPokeAfter }}</td>
+           <td rowspan="2">{{ pokemon.Xp }}</td>
+           <td rowspan="2">{{ pokemon.Xp * 2 }}</td>
         </tr>
         <tr ng-repeat-end>
            <td style="text-align:right;"> {{ pokemon.EvolveTo.join('\nor ') }} </td>
            <td><input type="text" size="3" ngPattern="\d+" ng-model="pokemon.evolvedCount"></td>
            <td> - </td>
            <td> - </td>
-           <td></td>
-           <td></td>
-           <td></td>
-           <td></td>
+           <td>{{ pokemon.numEvPokeToTransfer }}</td>
+           <td> - </td>
+           <td>{{ pokemon.numEvPokeAfter }}</td>
+
         </tr>
 
     </table>
@@ -63,6 +66,46 @@ Lucky Egg</th>
                 vm.InitValues = function(e) {
                     e.count = e.candyCount = e.evolvedCount = 0;
                     return e;
+                }
+
+                vm.ToTransfer = function(pokemon) {
+                    var numEvPoke = 0;
+                    var numToEvolve = 0;
+                    var numPokeToTransfer =0;
+                    var numEvPokeToTransfer = 0;
+                    var numPoke = pokemon.count;
+                    var numCandy = pokemon.candyCount;
+                    var numEvPoke = pokemon.evolvedCount;
+
+                    // Math.floor(pokemon.candyCount / pokemon.Candy );
+                    // while (numPoke > 0 && Math.floor(numCandy / pokemon.Candy ) > 0) {
+                    //     numCandy -= pokemon.Candy;
+                    //     numPoke -= 1;
+                    //     numToEvolve += 1;
+                    // }
+                    while (numPoke > 0 && Math.floor((numCandy + numEvPoke + numPoke -1) / pokemon.Candy ) > 0) {
+                        if (numCandy >= pokemon.Candy) {
+                            numCandy -= pokemon.Candy;
+                            numPoke -= 1;
+                            numToEvolve += 1;
+                            numEvPoke += 1;
+                        } else if (numEvPoke > 0) {
+                            numEvPoke -=1;
+                            numEvPokeToTransfer +=1;
+                            numCandy += 1;
+                        } else {
+                            numPoke -=1;
+                            numPokeToTransfer +=1;
+                            numCandy += 1;
+                        }
+                    }
+                    pokemon.numToEvolve = numToEvolve;
+                    // pokemon.numPokeToTransfer = numPokeToTransfer;
+                    pokemon.numEvPokeToTransfer = numEvPokeToTransfer;
+                    pokemon.numPokeAfter = numPoke;
+                    pokemon.numEvPokeAfter = numEvPoke;
+                    pokemon.Xp = numToEvolve * 500;
+                    return "TESTING DON'T USE\n" + numPokeToTransfer;
                 }
 
                 $http.get("data/evolve.json")
