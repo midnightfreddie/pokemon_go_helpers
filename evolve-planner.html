@@ -114,12 +114,11 @@ Lucky Egg</th>
                         } else if (numEvPoke > 0) {
                             numEvPoke -=1;
                             numEvPokeToTransfer +=1;
-                            numCandy += 1;
                         } else {
                             numPoke -=1;
                             numPokeToTransfer +=1;
-                            numCandy += 1;
                         }
+                        numCandy += 1;
                     }
                     pokemon.numToEvolve = numToEvolve;
                     pokemon.numEvPokeToTransfer = numEvPokeToTransfer;
